@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import os
+import json
 from dotenv import load_dotenv
 
 
@@ -20,4 +21,14 @@ def responseDatabase(databaseID,headers):
     res=requests.request("GET",readUrl,headers=headers)
     print(res.status_code)
 
-responseDatabase(databaseID,headers)
+def readDatabase(databaseID, headers):
+    readUrl = f"https://api.notion.com/v1/databases/{databaseID}/query"
+    res = requests.request("POST", readUrl, headers=headers)
+    data = res.json()
+    with open('./full-properties.json', 'w', encoding='utf8') as f:
+        json.dump(data, f, ensure_ascii=False)
+    with open('./results.json', 'w', encoding='utf8') as f:
+        json.dump(data['results'], f, ensure_ascii=False)
+    return data['results']
+
+data = readDatabase(databaseID,headers)
