@@ -1,0 +1,12 @@
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+
+# Dados sensíveis
+full-properties.json
+results.json
+
+#Esboço
+notebooks/
