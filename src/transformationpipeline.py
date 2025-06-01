@@ -40,6 +40,6 @@ if __name__ == 'main':
     df = Readjson(path) 
     df_habits_long_cleaned = df.pipe(ExplodeJsonDataframe)\
         .pipe(SelectOnlyRowsThatMatter)\
-            .pipe(Pivoting_DataFrame)\
-                .pipe(Cleaning_DataFrame)
+            .pipe(PivotingDataFrame)\
+                .pipe(CleaningDataFrame)
 
