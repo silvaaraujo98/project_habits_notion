@@ -35,7 +35,7 @@ def CleaningDataFrame(df_habits_long):
     return df_habits_long_cleaned
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
     path = './results.json'
     df = Readjson(path) 
     df_habits_long_cleaned = df.pipe(ExplodeJsonDataframe)\
