@@ -20,14 +20,14 @@ def SelectOnlyRowsThatMatter(df_properties_exploded):
 
     return df_habits_rows
 
-def Pivoting_DataFrame(df_habits_rows):
+def PivotingDataFrame(df_habits_rows):
      
      df_habits_long = pd.melt(df_habits_rows,id_vars = 'Created time.created_time' )  
      
      return  df_habits_long
 
 
-def Cleaning_DataFrame(df_habits_long):
+def CleaningDataFrame(df_habits_long):
     
     df_habits_long_cleaned = df_habits_long.rename(columns = {'variable':"habit"})
     df_habits_long_cleaned['habit'] = df_habits_long_cleaned['habit'].str.replace(".checkbox","")
