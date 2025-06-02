@@ -34,12 +34,17 @@ def CleaningDataFrame(df_habits_long):
     
     return df_habits_long_cleaned
 
-
-if __name__ == '__main__':
+def execute_transformation_functions():
     path = './results.json'
     df = Readjson(path) 
     df_habits_long_cleaned = df.pipe(ExplodeJsonDataframe)\
         .pipe(SelectOnlyRowsThatMatter)\
             .pipe(PivotingDataFrame)\
                 .pipe(CleaningDataFrame)
+    return df
+
+
+if __name__ == '__main__':
+    execute_transformation_functions()
+
 
