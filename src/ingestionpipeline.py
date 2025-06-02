@@ -4,6 +4,10 @@ from database import Base, HabitScore
 from dotenv import load_dotenv
 import os
 from transformationpipeline import execute_transformation_functions
+import pandas as pd
+
+
+
 load_dotenv()
 df = execute_transformation_functions()
 
@@ -36,6 +40,15 @@ def createngine():
 
 def ingestdatatopostgres(df,engine):
     df.to_sql("habitscore",engine,if_exists= 'replace',index=False)
+        # Verificar se os dados foram ingeridos
+    try:
+        # Leia a tabela de volta para um DataFrame
+        df_check = pd.read_sql_table("habitscore", engine)
+        print("\nDados lidos do PostgreSQL (primeiras 5 linhas):")
+        print(df_check.head())
+        print(f"\nTotal de linhas na tabela 'habitscore': {len(df_check)}")
+    except Exception as e:
+        print(f"\nErro ao verificar os dados no PostgreSQL: {e}")
 
 if __name__ == "__main__":
     ingestdatatopostgres(df,createngine())

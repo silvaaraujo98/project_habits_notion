@@ -41,7 +41,7 @@ def execute_transformation_functions():
         .pipe(SelectOnlyRowsThatMatter)\
             .pipe(PivotingDataFrame)\
                 .pipe(CleaningDataFrame)
-    return df
+    return df_habits_long_cleaned
 
 
 if __name__ == '__main__':
