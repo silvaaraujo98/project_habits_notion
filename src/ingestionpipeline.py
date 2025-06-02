@@ -3,8 +3,10 @@ from sqlalchemy.orm import sessionmaker
 from database import Base, HabitScore
 from dotenv import load_dotenv
 import os
-
+from transformationpipeline import execute_transformation_functions
 load_dotenv()
+df = execute_transformation_functions()
+
 
 POSTGRES_USER = os.getenv('POSTGRES_USER')
 POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
@@ -36,5 +38,5 @@ def ingestdatatopostgres(df,engine):
     df.to_sql("habitscore",engine,if_exists= 'replace',index=False)
 
 if __name__ == "__main__":
-    createngine()
+    ingestdatatopostgres(df,createngine())
 
