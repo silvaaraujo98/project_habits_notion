@@ -3,7 +3,7 @@ import pandas as pd
 def Readjson(path):
     
     df = pd.read_json(path)
-    df_properties = df['properties']
+    df_properties = df['results']
     
     return df_properties
 
@@ -22,7 +22,7 @@ def SelectOnlyRowsThatMatter(df_properties_exploded):
 
 def PivotingDataFrame(df_habits_rows):
      
-     df_habits_long = pd.melt(df_habits_rows,id_vars = 'Created time.created_time' )  
+     df_habits_long = pd.melt(df_habits_rows,id_vars = 'properties.Created time.created_time')  
      
      return  df_habits_long
 

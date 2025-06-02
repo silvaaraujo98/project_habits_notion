@@ -43,7 +43,7 @@ def readDatabase(databaseID, headers):
         print(f"Fetched {len(data['results'])} rows. Total so far: {len(all_results)}. Has more: {has_more}")
 
     # Optionally, save the full data to a file
-    with open('./full-properties.json', 'w', encoding='utf8') as f:
+    with open('./results.json', 'w', encoding='utf8') as f:
         json.dump({"results": all_results}, f, ensure_ascii=False, indent=2) # Added indent for readability
 
     return all_results
