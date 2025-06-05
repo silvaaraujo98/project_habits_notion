@@ -1,5 +1,6 @@
 import pandas as pd
 from datetime import datetime
+from extractionpipeline import extraction_database_notion
 
 def Readjson(path):
     
@@ -9,7 +10,7 @@ def Readjson(path):
     return df_properties
 
 def ExplodeJsonDataframe(df_properties):
-    
+    df_properties = df_properties['properties']
     df_properties_exploded = pd.json_normalize(df_properties)
     return df_properties_exploded
 
@@ -23,7 +24,7 @@ def SelectOnlyRowsThatMatter(df_properties_exploded):
 
 def PivotingDataFrame(df_habits_rows):
      
-     df_habits_long = pd.melt(df_habits_rows,id_vars = 'properties.Created time.created_time')  
+     df_habits_long = pd.melt(df_habits_rows,id_vars = 'Created time.created_time')  
      
      return  df_habits_long
 
@@ -31,7 +32,7 @@ def PivotingDataFrame(df_habits_rows):
 def CleaningDataFrame(df_habits_long):
     
     df_habits_long_cleaned = df_habits_long.rename(columns = {'variable':"habit",
-                                                              "properties.Created time.created_time":"date_habit"})
+                                                              "Created time.created_time":"dt_habit"})
     df_habits_long_cleaned['habit'] = df_habits_long_cleaned['habit'].str.replace(".checkbox","").str.replace("properties.","")
     
     return df_habits_long_cleaned
@@ -42,9 +43,9 @@ def create_timestamp_column(df):
     return df
     
 def execute_transformation_functions():
-    
-    path = './results.json'
-    df = Readjson(path) 
+    data_extracted_from_notion = extraction_database_notion()
+    df = pd.DataFrame(data_extracted_from_notion)
+
     df_habits_long_cleaned = df.pipe(ExplodeJsonDataframe)\
         .pipe(SelectOnlyRowsThatMatter)\
             .pipe(PivotingDataFrame)\
