@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 
 def Readjson(path):
     
@@ -34,13 +35,21 @@ def CleaningDataFrame(df_habits_long):
     
     return df_habits_long_cleaned
 
+def create_timestamp_column(df):
+    today = datetime.now()
+    df['dt_processed'] = today
+    return df
+    
 def execute_transformation_functions():
+    
     path = './results.json'
     df = Readjson(path) 
     df_habits_long_cleaned = df.pipe(ExplodeJsonDataframe)\
         .pipe(SelectOnlyRowsThatMatter)\
             .pipe(PivotingDataFrame)\
-                .pipe(CleaningDataFrame)
+                .pipe(CleaningDataFrame)\
+                    .pipe(create_timestamp_column)
+    
     return df_habits_long_cleaned
 
 
