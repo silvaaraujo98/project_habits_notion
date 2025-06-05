@@ -1,6 +1,5 @@
 import pandas as pd
 from datetime import datetime
-from extractionpipeline import extraction_database_notion
 
 def Readjson(path):
     
@@ -42,9 +41,7 @@ def create_timestamp_column(df):
     df['dt_processed'] = today
     return df
     
-def execute_transformation_functions():
-    data_extracted_from_notion = extraction_database_notion()
-    df = pd.DataFrame(data_extracted_from_notion)
+def execute_transformation_functions(df):
 
     df_habits_long_cleaned = df.pipe(ExplodeJsonDataframe)\
         .pipe(SelectOnlyRowsThatMatter)\
@@ -55,7 +52,5 @@ def execute_transformation_functions():
     return df_habits_long_cleaned
 
 
-if __name__ == '__main__':
-    execute_transformation_functions()
 
 

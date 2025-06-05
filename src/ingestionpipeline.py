@@ -3,13 +3,11 @@ from sqlalchemy.orm import sessionmaker
 from database import Base, HabitScore
 from dotenv import load_dotenv
 import os
-from transformationpipeline import execute_transformation_functions
 import pandas as pd
 
 
 
 load_dotenv()
-df = execute_transformation_functions()
 
 
 POSTGRES_USER = os.getenv('POSTGRES_USER')
@@ -38,7 +36,8 @@ def createngine():
 
 
 
-def ingestdatatopostgres(df,engine):
+def ingestdatatopostgres(df):
+    engine = createngine()
     df.to_sql("habitscore",engine,if_exists= 'replace',index=False)
         # Verificar se os dados foram ingeridos
     try:
@@ -51,5 +50,5 @@ def ingestdatatopostgres(df,engine):
         print(f"\nErro ao verificar os dados no PostgreSQL: {e}")
 
 if __name__ == "__main__":
-    ingestdatatopostgres(df,createngine())
+    ingestdatatopostgres(df)
 

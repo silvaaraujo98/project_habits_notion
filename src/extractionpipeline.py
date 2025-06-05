@@ -50,15 +50,15 @@ def readDatabase(databaseID, headers):
     with open('./results.json', 'w', encoding='utf8') as f:
         json.dump({"results": all_results}, f, ensure_ascii=False, indent=2) # Added indent for readability
 
-    return data
+    return all_results
 
 def extraction_database_notion():
     
     databaseID, headers = _define_constants()
     data = readDatabase(databaseID, headers)
-    results = data['results']
+    results_df = pd.DataFrame(data)
     
-    return results
+    return results_df
 
 if __name__ == "__main__":
 
