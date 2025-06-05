@@ -30,7 +30,8 @@ def PivotingDataFrame(df_habits_rows):
 
 def CleaningDataFrame(df_habits_long):
     
-    df_habits_long_cleaned = df_habits_long.rename(columns = {'variable':"habit"})
+    df_habits_long_cleaned = df_habits_long.rename(columns = {'variable':"habit",
+                                                              "properties.Created time.created_time":"date_habit"})
     df_habits_long_cleaned['habit'] = df_habits_long_cleaned['habit'].str.replace(".checkbox","").str.replace("properties.","")
     
     return df_habits_long_cleaned
