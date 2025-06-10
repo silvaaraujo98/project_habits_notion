@@ -46,9 +46,9 @@ def ingestdatatopostgres(df):
         print("\nDados lidos do PostgreSQL (primeiras 5 linhas):")
         print(df_check.head())
         print(f"\nTotal de linhas na tabela 'habitscore': {len(df_check)}")
+        return True
     except Exception as e:
         print(f"\nErro ao verificar os dados no PostgreSQL: {e}")
+        return False
 
-if __name__ == "__main__":
-    ingestdatatopostgres(df)
 
