@@ -1,6 +1,7 @@
 from extractionpipeline import extraction_database_notion
 from transformationpipeline import execute_transformation_functions
 from ingestionpipeline import ingestdatatopostgres
+import time 
 
 
 def run_full_pipeline():
@@ -24,6 +25,8 @@ def run_full_pipeline():
             print("Erro na ingestão.")
 
 if __name__ == "__main__":
-    run_full_pipeline()
+    while True:
+        run_full_pipeline()
+        time.sleep(86400)
 
 
